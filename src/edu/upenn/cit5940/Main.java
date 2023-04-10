@@ -1,5 +1,8 @@
 package edu.upenn.cit5940;
 
+import edu.upenn.cit5940.logging.Logger;
+import edu.upenn.cit5940.ui.UserInterface;
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -11,11 +14,29 @@ public class Main {
 	        return;
 	    }
 	    
-	    // Initialize filenames
+	     //Initialize filenames
 	    String covidFilename = args[0];
 	    String propertiesFilename = args[1];
 	    String populationFilename = args[3];
 	    String logFilename = args[4];
+	    
+	    
+	   // Create logger and log program start
+       //Logger logger = Logger.getInstance();
+	    
+	    
+	    // Create Reader objects
+	    
+	    
+	    
+	    // Create Processor object and initialize data (going to want to pass in Reader objects)
+	    
+	    
+	    
+	    
+	    // Create UI object and run UI, (going to want to pass in Processor and Logger objects)
+	    UserInterface ui = new UserInterface();
+        ui.run();
 
 	}
 
