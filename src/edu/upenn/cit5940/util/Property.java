@@ -1,4 +1,4 @@
-package edu.upenn.cit594.util;
+package edu.upenn.cit5940.util;
 
 public class Property {
 	
