@@ -2,23 +2,23 @@ package edu.upenn.cit594.util;
 
 public class Population {
 	
-	private String zipCode;
+	private String zip_code;
 	private int population;
 	
-	public Population (String zipCode, int population) {
+	public Population (String zip_code, int population) {
 		this.population = population;
-		this.zipCode = zipCode;
+		this.zip_code = zip_code;
 	}
 
 	public String getZipCode() {
-		return zipCode;
+		return zip_code;
 	}
 
-	public void setZipCode(String zipCode) {
-		this.zipCode = zipCode;
+	public void setZipCode(String zip_code) {
+		this.zip_code = zip_code;
 	}
   
-  public int getPopulation() {
+  	public int getPopulation() {
 		return population;
 	}
 
