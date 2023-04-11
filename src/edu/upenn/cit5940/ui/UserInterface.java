@@ -11,7 +11,7 @@ public class UserInterface {
             System.out.println("Please select an option:");
             System.out.println("1 - List available actions");
             System.out.println("2 - Total population for all ZIP Codes");
-            System.out.println("3 - Total  vaccinations per capita");
+            System.out.println("3 - Total,partial, or full vaccinations per capita");
             System.out.println("4 - Average market value");
             System.out.println("5 - Average total livable area");
             System.out.println("6 - Total market value per capita");

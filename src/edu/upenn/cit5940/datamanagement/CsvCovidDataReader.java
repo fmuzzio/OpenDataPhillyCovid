@@ -22,7 +22,8 @@ public class CsvCovidDataReader implements CovidDataReader {
     public List<Zipcode> getCovidData() {
     	List<Zipcode> zipCodes = new ArrayList<>();
     	//reg expression for checking "YYYY-MM-DD hh:mm:ss"  format
-        Pattern timestampPattern = Pattern.compile("^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$");
+    	Pattern timestampPattern = Pattern.compile("^\\d{1,2}/\\d{1,2}/\\d{4} \\d{2}:\\d{2}$");
+
 
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
@@ -30,9 +31,11 @@ public class CsvCovidDataReader implements CovidDataReader {
             br.readLine();
 
             while ((line = br.readLine()) != null) {
-                String[] values = line.split("\t");
+                String[] values = line.split(",");
 
                 int zipCode = parseIntOrDefault(values[0], 0);
+                String zipCodeStr = String.format("%05d", zipCode);
+                
                 int negativeTests = parseIntOrDefault(values[1], 0);
                 int positiveTests = parseIntOrDefault(values[2], 0);
                 int deaths = parseIntOrDefault(values[3], 0);
@@ -43,7 +46,7 @@ public class CsvCovidDataReader implements CovidDataReader {
                 String etlTimestamp = values[8];
 
                 Matcher timestampMatcher = timestampPattern.matcher(etlTimestamp);
-                if (timestampMatcher.matches()) {
+                if (timestampMatcher.matches() && zipCodeStr.length() == 5) {
                     
                     Zipcode zipCodeObj = new Zipcode(zipCode, negativeTests, positiveTests, hospitalized, deaths, partiallyVaccinated, fullyVaccinated, boosted);
                     zipCodes.add(zipCodeObj);
@@ -55,9 +58,10 @@ public class CsvCovidDataReader implements CovidDataReader {
         	//logger.log("Exception occurred while reading JSON data: " + e.getMessage());
             e.printStackTrace();
         }
-
+        
         return zipCodes;
     }
+    
 
     private int parseIntOrDefault(String value, int defaultValue) {
         try {

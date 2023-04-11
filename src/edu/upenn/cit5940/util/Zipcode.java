@@ -84,4 +84,18 @@ public class Zipcode {
 	public void setBoosted(int boosted) {
 		this.boosted = boosted;
 	}
+	
+	 @Override
+    public String toString() {
+        return "Zipcode{" +
+                "zipCode=" + zipCode +
+                ", negativeTests=" + negativeTests +
+                ", positiveTests=" + positiveTests +
+                ", hospitalized=" + hospitalized +
+                ", deaths=" + deaths +
+                ", partiallyVaccinated=" + partiallyVaccinated +
+                ", fullyVaccinated=" + fullyVaccinated +
+                ", boosted=" + boosted +
+                '}'+"\n";
+	    }
 }

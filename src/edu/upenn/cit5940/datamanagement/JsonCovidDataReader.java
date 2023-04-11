@@ -38,26 +38,26 @@ public class JsonCovidDataReader implements CovidDataReader {
                 JSONObject jsonObject = (JSONObject) object;
                 
                 String timestamp = (String) jsonObject.get("etl_timestamp");
-
-                // Check if the timestamp matches the specified format
-                if (timestampPattern.matcher(timestamp).matches()) {
+                long zipCodeNum = (long) jsonObject.get("zip_code");
+                String zipCodeStr = String.format("%05d", zipCodeNum); {
                 
-                // we check each parameter to see if null. if not null then get the value else assign a 0
-                int zipCode = ((Number) jsonObject.get("zip_code")).intValue();
-                int negativeTests = jsonObject.get("NEG") != null ? ((Number) jsonObject.get("NEG")).intValue() : 0;
-                int positiveTests = jsonObject.get("POS") != null ? ((Number) jsonObject.get("POS")).intValue() : 0;
-                int hospitalized = jsonObject.get("hospitalized") != null ? ((Number) jsonObject.get("hospitalized")).intValue() : 0;
-                int deaths = jsonObject.get("deaths") != null ? ((Number) jsonObject.get("deaths")).intValue() : 0;
-                int partiallyVaccinated = jsonObject.get("partially_vaccinated") != null ? ((Number) jsonObject.get("partially_vaccinated")).intValue() : 0;
-                int fullyVaccinated = jsonObject.get("fully_vaccinated") != null ? ((Number) jsonObject.get("fully_vaccinated")).intValue() : 0;
-                int boosted = jsonObject.get("boosted") != null ? ((Number) jsonObject.get("boosted")).intValue() : 0;
-
-                Zipcode zipcode = new Zipcode(zipCode, negativeTests, positiveTests, hospitalized, deaths, partiallyVaccinated, fullyVaccinated,boosted);
-                zipcodes.add(zipcode);
+                if (timestampPattern.matcher(timestamp).matches() && zipCodeStr.length() == 5) {
+                	
+	                // we check each parameter to see if null. if not null then get the value else assign a 0
+	                int zipCode = ((Number) jsonObject.get("zip_code")).intValue();
+	                int negativeTests = jsonObject.get("NEG") != null ? ((Number) jsonObject.get("NEG")).intValue() : 0;
+	                int positiveTests = jsonObject.get("POS") != null ? ((Number) jsonObject.get("POS")).intValue() : 0;
+	                int hospitalized = jsonObject.get("hospitalized") != null ? ((Number) jsonObject.get("hospitalized")).intValue() : 0;
+	                int deaths = jsonObject.get("deaths") != null ? ((Number) jsonObject.get("deaths")).intValue() : 0;
+	                int partiallyVaccinated = jsonObject.get("partially_vaccinated") != null ? ((Number) jsonObject.get("partially_vaccinated")).intValue() : 0;
+	                int fullyVaccinated = jsonObject.get("fully_vaccinated") != null ? ((Number) jsonObject.get("fully_vaccinated")).intValue() : 0;
+	                int boosted = jsonObject.get("boosted") != null ? ((Number) jsonObject.get("boosted")).intValue() : 0;
+	
+	                Zipcode zipcode = new Zipcode(zipCode, negativeTests, positiveTests, hospitalized, deaths, partiallyVaccinated, fullyVaccinated,boosted);
+	                zipcodes.add(zipcode);
+                	}
                 
                 
-                // Log the processing of a Zipcode (maybe add a logging method here)
-                //logger.log("Processed Zipcode: " + zipCode);
                 }
             }
             
