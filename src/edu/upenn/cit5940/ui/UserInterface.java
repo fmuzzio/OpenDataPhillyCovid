@@ -23,7 +23,6 @@ public class UserInterface {
             switch (userInput) {
                 case "1":
                     // Call method for option 1
-                	System.out.println("Hello!");
                     break;
                 case "2":
                     // Call method for option 2

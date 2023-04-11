@@ -12,16 +12,16 @@ public class Logger {
     private String logFileName;
     private Writer logFileWriter;
 
-    private Logger() {}
+    private Logger(String logFilename) {}
 
-    public static synchronized Logger getInstance() {
+    public static  Logger getInstance(String logFilename) {
         if (instance == null) {
-            instance = new Logger();
+            instance = new Logger(logFilename);
         }
         return instance;
     }
 
-    public synchronized void log(String message) {
+    public void log(String message) {
         String timestamp = String.valueOf(System.currentTimeMillis());
         String logMessage = timestamp + " " + message + "\n";
         try {
@@ -39,7 +39,7 @@ public class Logger {
         }
     }
 
-    public synchronized void setOutput(String fileName) {
+    public  void setOutput(String fileName) {
         if (fileName == null) {
             logFileName = null;
             if (logFileWriter != null) {

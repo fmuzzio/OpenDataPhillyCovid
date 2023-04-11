@@ -22,7 +22,7 @@ public class Main {
 	    
 	    
 	   // Create logger and log program start
-       //Logger logger = Logger.getInstance();
+	    Logger logger = Logger.getInstance(logFilename);
 	    
 	    
 	    // Create Reader objects
