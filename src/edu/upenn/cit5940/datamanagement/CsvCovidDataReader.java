@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import edu.upenn.cit5940.util.Zipcode;
+import edu.upenn.cit5940.util.Covid;
 
 public class CsvCovidDataReader implements CovidDataReader {
 	
@@ -19,8 +19,8 @@ public class CsvCovidDataReader implements CovidDataReader {
     }
     
     @Override
-    public List<Zipcode> getCovidData() {
-    	List<Zipcode> zipCodes = new ArrayList<>();
+    public List<Covid> getCovidData() {
+    	List<Covid> covidData = new ArrayList<>();
     	//reg expression for checking "YYYY-MM-DD hh:mm:ss"  format
     	Pattern timestampPattern = Pattern.compile("^\\d{1,2}/\\d{1,2}/\\d{4} \\d{2}:\\d{2}$");
 
@@ -48,8 +48,8 @@ public class CsvCovidDataReader implements CovidDataReader {
                 Matcher timestampMatcher = timestampPattern.matcher(etlTimestamp);
                 if (timestampMatcher.matches() && zipCodeStr.length() == 5) {
                     
-                    Zipcode zipCodeObj = new Zipcode(zipCode, negativeTests, positiveTests, hospitalized, deaths, partiallyVaccinated, fullyVaccinated, boosted);
-                    zipCodes.add(zipCodeObj);
+                	Covid covidObj = new Covid(zipCode, negativeTests, positiveTests, hospitalized, deaths, partiallyVaccinated, fullyVaccinated, boosted);
+                	covidData.add(covidObj);
                     // Log the processing of a Zipcode (maybe add a logging method here)
                     //logger.log("Processed Zipcode: " + zipCode);
                 }
@@ -59,7 +59,7 @@ public class CsvCovidDataReader implements CovidDataReader {
             e.printStackTrace();
         }
         
-        return zipCodes;
+        return covidData;
     }
     
 

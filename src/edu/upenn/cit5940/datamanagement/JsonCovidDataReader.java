@@ -1,7 +1,7 @@
 package edu.upenn.cit5940.datamanagement;
 
 import edu.upenn.cit5940.logging.Logger;
-import edu.upenn.cit5940.util.Zipcode;
+import edu.upenn.cit5940.util.Covid;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -24,8 +24,8 @@ public class JsonCovidDataReader implements CovidDataReader {
     }
 
     @Override
-    public List<Zipcode> getCovidData() {
-        List<Zipcode> zipcodes = new ArrayList<>();
+    public List<Covid> getCovidData() {
+        List<Covid> covidData = new ArrayList<>();
         JSONParser parser = new JSONParser();
 
         try {
@@ -53,10 +53,9 @@ public class JsonCovidDataReader implements CovidDataReader {
 	                int fullyVaccinated = jsonObject.get("fully_vaccinated") != null ? ((Number) jsonObject.get("fully_vaccinated")).intValue() : 0;
 	                int boosted = jsonObject.get("boosted") != null ? ((Number) jsonObject.get("boosted")).intValue() : 0;
 	
-	                Zipcode zipcode = new Zipcode(zipCode, negativeTests, positiveTests, hospitalized, deaths, partiallyVaccinated, fullyVaccinated,boosted);
-	                zipcodes.add(zipcode);
+	                Covid covidObj = new Covid(zipCode, negativeTests, positiveTests, hospitalized, deaths, partiallyVaccinated, fullyVaccinated,boosted);
+	                covidData.add(covidObj);
                 	}
-                
                 
                 }
             }
@@ -66,6 +65,6 @@ public class JsonCovidDataReader implements CovidDataReader {
             e.printStackTrace();
         }
 
-        return zipcodes;
+        return covidData;
     }
 }

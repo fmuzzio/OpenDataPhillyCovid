@@ -8,7 +8,7 @@ import edu.upenn.cit5940.datamanagement.JsonCovidDataReader;
 import edu.upenn.cit5940.logging.Logger;
 import edu.upenn.cit5940.processor.Processor;
 import edu.upenn.cit5940.ui.UserInterface;
-import edu.upenn.cit5940.util.Zipcode;
+import edu.upenn.cit5940.util.Covid;
 
 public class Main {
 
@@ -31,12 +31,12 @@ public class Main {
 	    
 	    
 	    // Create Reader objects, also add one for properties and population maybe
-	    List<Zipcode> zipcodes = fileExtensionCheck(covidFilename);
+	    List<Covid> coviddata = fileExtensionCheck(covidFilename);
 	    
 	    
 
-        for (Zipcode zipcode : zipcodes) {
-            System.out.println(zipcode);
+        for (Covid covid : coviddata) {
+            System.out.println(covid);
             
        }
         
@@ -65,8 +65,8 @@ public class Main {
     
 	}
 	
-	 public static List<Zipcode> fileExtensionCheck(String file) {
-         List<Zipcode> zipcodes = new ArrayList<>();
+	 public static List<Covid> fileExtensionCheck(String file) {
+         List<Covid> zipcodes = new ArrayList<>();
 
          if (file.endsWith("json")) {
              JsonCovidDataReader jsonCovidDataReader = new JsonCovidDataReader(file);

@@ -1,6 +1,6 @@
 package edu.upenn.cit5940.util;
 
-public class Zipcode {
+public class Covid {
     private int zipCode;
     private int negativeTests;
     private int positiveTests;
@@ -10,7 +10,7 @@ public class Zipcode {
     private int fullyVaccinated;
     private int boosted;
 
-    public Zipcode(int zipCode, int negativeTests, int positiveTests, int hospitalized, int deaths, int partiallyVaccinated, int fullyVaccinated,int boosted) {
+    public Covid(int zipCode, int negativeTests, int positiveTests, int hospitalized, int deaths, int partiallyVaccinated, int fullyVaccinated,int boosted) {
         this.zipCode = zipCode;
         this.negativeTests = negativeTests;
         this.positiveTests = positiveTests;
@@ -87,7 +87,7 @@ public class Zipcode {
 	
 	 @Override
     public String toString() {
-        return "Zipcode{" +
+        return "Covid{" +
                 "zipCode=" + zipCode +
                 ", negativeTests=" + negativeTests +
                 ", positiveTests=" + positiveTests +
