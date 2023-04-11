@@ -14,27 +14,27 @@ public class Property {
 
 
 
-	public String getZip_code() {
+	public String getZipCode() {
 		return zip_code;
 	}
 
-	public void setZip_code(String zip_code) {
+	public void setZipCode(String zip_code) {
 		this.zip_code = zip_code;
 	}
 
-	public double getMarket_value() {
+	public double getMarketValue() {
 		return market_value;
 	}
 
-	public void setMarket_value(int market_value) {
+	public void setMarketValue(int market_value) {
 		this.market_value = market_value;
 	}
 
-	public double getTotal_livable_area() {
+	public double getTotalLivableArea() {
 		return total_livable_area;
 	}
 
-	public void setTotal_livable_area(int total_livable_area) {
+	public void setTotalLivableArea(int total_livable_area) {
 		this.total_livable_area = total_livable_area;
 	}
 
