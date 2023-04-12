@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 import edu.upenn.cit5940.util.Covid;
 
-public class CsvCovidDataReader implements CovidDataReader {
+public class CsvCovidDataReader extends GeneralReader implements CovidDataReader   {
 	
 	private String fileName;
 
@@ -48,7 +48,7 @@ public class CsvCovidDataReader implements CovidDataReader {
                 Matcher timestampMatcher = timestampPattern.matcher(etlTimestamp);
                 if (timestampMatcher.matches() && zipCodeStr.length() == 5) {
                     
-                	Covid covidObj = new Covid(zipCode, negativeTests, positiveTests, hospitalized, deaths, partiallyVaccinated, fullyVaccinated, boosted);
+                	Covid covidObj = new Covid(zipCode, negativeTests, positiveTests, hospitalized, deaths, partiallyVaccinated, fullyVaccinated, boosted,etlTimestamp);
                 	covidData.add(covidObj);
                     // Log the processing of a Zipcode (maybe add a logging method here)
                     //logger.log("Processed Zipcode: " + zipCode);

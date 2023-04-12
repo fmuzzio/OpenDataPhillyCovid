@@ -12,7 +12,7 @@ public class Logger {
     private String logFileName;
     private Writer logFileWriter;
 
-    private Logger(String logFilename) {}
+    public Logger(String logFilename) {}
 
     public static  Logger getInstance(String logFilename) {
         if (instance == null) {

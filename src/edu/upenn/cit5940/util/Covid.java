@@ -9,8 +9,9 @@ public class Covid {
     private int partiallyVaccinated;
     private int fullyVaccinated;
     private int boosted;
+    private String timestamp;
 
-    public Covid(int zipCode, int negativeTests, int positiveTests, int hospitalized, int deaths, int partiallyVaccinated, int fullyVaccinated,int boosted) {
+    public Covid(int zipCode, int negativeTests, int positiveTests, int hospitalized, int deaths, int partiallyVaccinated, int fullyVaccinated,int boosted,String timestamp) {
         this.zipCode = zipCode;
         this.negativeTests = negativeTests;
         this.positiveTests = positiveTests;
@@ -19,6 +20,7 @@ public class Covid {
         this.partiallyVaccinated = partiallyVaccinated;
         this.fullyVaccinated = fullyVaccinated;
         this.boosted = boosted;
+        this.timestamp = timestamp;
     }
 
 	public int getZipCode() {
@@ -85,6 +87,14 @@ public class Covid {
 		this.boosted = boosted;
 	}
 	
+	public String getTimestamp() {
+		return timestamp;
+	}
+	
+	public void setTimestamp(String timestamp) {
+		this.timestamp = timestamp;
+	}
+	
 	 @Override
     public String toString() {
         return "Covid{" +
@@ -96,6 +106,7 @@ public class Covid {
                 ", partiallyVaccinated=" + partiallyVaccinated +
                 ", fullyVaccinated=" + fullyVaccinated +
                 ", boosted=" + boosted +
+                ", timestamp=" + timestamp +
                 '}'+"\n";
 	    }
 }

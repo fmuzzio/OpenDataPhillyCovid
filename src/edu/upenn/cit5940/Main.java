@@ -1,14 +1,21 @@
 package edu.upenn.cit5940;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import edu.upenn.cit5940.datamanagement.CovidDataReader;
+import edu.upenn.cit5940.datamanagement.CovidReaderFactory;
 import edu.upenn.cit5940.datamanagement.CsvCovidDataReader;
 import edu.upenn.cit5940.datamanagement.JsonCovidDataReader;
+import edu.upenn.cit5940.datamanagement.PopulationReader;
+import edu.upenn.cit5940.datamanagement.PropertyReader;
 import edu.upenn.cit5940.logging.Logger;
 import edu.upenn.cit5940.processor.Processor;
 import edu.upenn.cit5940.ui.UserInterface;
 import edu.upenn.cit5940.util.Covid;
+import edu.upenn.cit5940.util.Population;
 
 public class Main {
 
@@ -29,57 +36,34 @@ public class Main {
 	    
 	    
 	    
+	    //create covid reader object
+	    CovidReaderFactory covidReaderFactory = new CovidReaderFactory();
+	    CovidDataReader covidReader = covidReaderFactory.getCovidReader(covidFilename);
 	    
-	    // Create Reader objects, also add one for properties and population maybe
-	    List<Covid> coviddata = fileExtensionCheck(covidFilename);
+	    //create property reader object
+	    PropertyReader propReader = new PropertyReader(propertiesFilename);
 	    
-	    
-
-        for (Covid covid : coviddata) {
-            System.out.println(covid);
-            
-       }
-        
-      
-       
-     
-	    
-	   // Create logger and log program start
+	    //create population reader object
+	    PopulationReader popReader = new PopulationReader(populationFilename);
+	     
+	   
+	    // Create logger and log program start
+	    Logger logger = new Logger(logFilename);
 	    //Logger logger = Logger.getInstance(logFilename);
 	    
 	    
-	    
-	    
-	    
-	    
+	   
 	    // Create Processor object and initialize data (going to want to pass in Reader objects)
-	    //Processor processor = new Processor();
+	    Processor processor = new Processor(covidReader,propReader,popReader);
 	    
 	    
 	    
-	    // Create UI object and run UI, (going to want to pass in Processor and Logger objects)
-	    UserInterface ui = new UserInterface();
+	    // Create UI object and run UI
+	    UserInterface ui = new UserInterface(processor,logger);
         ui.run();
         
-        
-    
+      
 	}
-	
-	 public static List<Covid> fileExtensionCheck(String file) {
-         List<Covid> zipcodes = new ArrayList<>();
 
-         if (file.endsWith("json")) {
-             JsonCovidDataReader jsonCovidDataReader = new JsonCovidDataReader(file);
-             zipcodes = jsonCovidDataReader.getCovidData();
-         } else if (file.endsWith("csv"))  {
-             CsvCovidDataReader csvCovidDataReader = new CsvCovidDataReader(file);
-             zipcodes = csvCovidDataReader.getCovidData();
-         }
-         else {
-        	 System.out.println("Invalid file extension. Only 'json' and 'csv' are supported.");
-         }
-
-         return zipcodes;
-     }
 
 }

@@ -1,8 +1,22 @@
 package edu.upenn.cit5940.ui;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
+import edu.upenn.cit5940.logging.Logger;
+import edu.upenn.cit5940.processor.Processor;
+
 public class UserInterface {
+	
+	protected Processor processor;
+    protected Logger logger;
+	
+	public UserInterface(Processor processor, Logger logger) {
+        this.processor = processor;
+        this.logger = logger;
+    }
+	
     public void run() {
         Scanner scanner = new Scanner(System.in);
         boolean exit = false;
@@ -21,18 +35,53 @@ public class UserInterface {
             String userInput = scanner.nextLine();
             
             switch (userInput) {
+            
                 case "1":
                     // Call method for option 1
                     break;
+                
                 case "2":
                     // Call method for option 2
+                	int population = processor.getTotalZipCodePopulation();
+                	System.out.println("BEGIN OUTPUT");
+                	System.out.println("The total population for all ZIP Code is: " + population);
+                	System.out.println("END OUTPUT\n");
                     break;
+                
                 case "3":
                     // Call method for option 3
+                	
+                    String vaccineType = "";
+                    while (!vaccineType.equalsIgnoreCase("partial") && !vaccineType.equalsIgnoreCase("full")) {
+                        System.out.print("Type \"partial\" or \"full\": ");
+                        vaccineType = scanner.nextLine();
+                        if (!vaccineType.equalsIgnoreCase("partial") && !vaccineType.equalsIgnoreCase("full")) {
+                            System.out.println("Invalid input. Please enter \"partial\" or \"full\".");
+                        }
+                    }
+
+                    String datePattern = "\\d{4}-\\d{2}-\\d{2}";
+                    String date = "";
+                    while (!date.matches(datePattern)) {
+                        System.out.print("Type a date in the format YYYY-MM-DD: ");
+                        date = scanner.nextLine();
+                        if (!date.matches(datePattern)) {
+                            System.out.println("Invalid input. Please enter a date in the format YYYY-MM-DD.");
+                        }
+                    }
+
+                    HashMap<Integer, Double> vaccinationsPerCapita = processor.getVaccinationsPerCapita(vaccineType, date);
+                    System.out.println("BEGIN OUTPUT");
+                    vaccinationsPerCapita.entrySet().stream()
+                            .sorted(Map.Entry.comparingByKey())
+                            .forEach(entry -> System.out.printf("%05d %.4f%n", entry.getKey(), entry.getValue()));
+                    System.out.println("END OUTPUT");
                     break;
+                
                 case "4":
                     // Call method for option 4
                     break;
+                
                 case "5":
                     // Call method for option 5
                     break;

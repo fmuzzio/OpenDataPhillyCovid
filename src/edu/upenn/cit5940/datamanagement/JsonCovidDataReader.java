@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-public class JsonCovidDataReader implements CovidDataReader {
+public class JsonCovidDataReader extends GeneralReader implements CovidDataReader {
     private String fileName;
     
     
@@ -53,7 +53,7 @@ public class JsonCovidDataReader implements CovidDataReader {
 	                int fullyVaccinated = jsonObject.get("fully_vaccinated") != null ? ((Number) jsonObject.get("fully_vaccinated")).intValue() : 0;
 	                int boosted = jsonObject.get("boosted") != null ? ((Number) jsonObject.get("boosted")).intValue() : 0;
 	
-	                Covid covidObj = new Covid(zipCode, negativeTests, positiveTests, hospitalized, deaths, partiallyVaccinated, fullyVaccinated,boosted);
+	                Covid covidObj = new Covid(zipCode, negativeTests, positiveTests, hospitalized, deaths, partiallyVaccinated, fullyVaccinated,boosted,timestamp);
 	                covidData.add(covidObj);
                 	}
                 
