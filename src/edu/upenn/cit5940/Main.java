@@ -16,6 +16,7 @@ import edu.upenn.cit5940.processor.Processor;
 import edu.upenn.cit5940.ui.UserInterface;
 import edu.upenn.cit5940.util.Covid;
 import edu.upenn.cit5940.util.Population;
+import edu.upenn.cit5940.util.Property;
 
 public class Main {
 
@@ -42,6 +43,12 @@ public class Main {
 	    
 	    //create property reader object
 	    PropertyReader propReader = new PropertyReader(propertiesFilename);
+	    
+	    //testing to see if property objects were created properly
+	    List<Property> properties = propReader.getAllProperty();
+	    for(Property property:properties) {
+	    	 System.out.println(property);
+	    }
 	    
 	    //create population reader object
 	    PopulationReader popReader = new PopulationReader(populationFilename);

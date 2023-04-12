@@ -39,5 +39,14 @@ public class Property {
 	}
 
 	
+	@Override
+    public String toString() {
+        return "Property{" +
+                "zipCode=" + zip_code +
+                ", market_value=" + market_value +
+                ", total_livable_area=" + total_livable_area +
+                '}'+"\n";
+	    }
+	
 
 }

@@ -3,12 +3,14 @@ package edu.upenn.cit5940.processor;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import edu.upenn.cit5940.datamanagement.CovidDataReader;
 import edu.upenn.cit5940.datamanagement.PopulationReader;
 import edu.upenn.cit5940.datamanagement.PropertyReader;
 import edu.upenn.cit5940.logging.Logger;
 import edu.upenn.cit5940.util.Covid;
+import edu.upenn.cit5940.util.Property;
 
 public class Processor {
 	
@@ -19,9 +21,11 @@ public class Processor {
     protected Logger logger;
     
     protected int populationSum = 0;
+    
 	protected HashMap<Integer, Integer> populations;
 	protected List<Covid> coviddata;
-	
+	protected List<Property> properties;
+ 	
 	public Processor(CovidDataReader covidreader,PropertyReader propreader,PopulationReader popreader) {
 		covidDataReader = covidreader;
 		propertiesReader = propreader;
@@ -72,6 +76,43 @@ public class Processor {
 
 	    return vaccinationsPerCapita;
 	}
+	
+	//section 3.6
+	public int getTotalMarketValuePerCapita(String zipCode) {
+	    populations = populationReader.readPopulation();
+	    properties = propertiesReader.getAllProperty();
+	    
+	    int population = 0;
+	    double totalMarketValue = 0;
+	    int intZipCode;
+	    
+	    try {
+	    	
+	        intZipCode = Integer.parseInt(zipCode);
+	    } 
+	    catch (NumberFormatException e) {
+	        return 0;
+	    }
+	    
+	    if (populations.containsKey(intZipCode)) {
+	        population = populations.get(intZipCode);
+	    } else {
+	        return 0;
+	    }
+
+	    for (Property property : properties) {
+	        if (property.getZipCode().equals(zipCode)) {
+	            totalMarketValue += property.getMarketValue();
+	        }
+	    }
+
+	    if (population == 0 || totalMarketValue == 0) {
+	        return 0;
+	    } else {
+	        return (int) (totalMarketValue / population);
+	    }
+	}
+
 
 	
 	

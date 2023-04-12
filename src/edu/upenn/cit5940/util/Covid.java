@@ -95,7 +95,7 @@ public class Covid {
 		this.timestamp = timestamp;
 	}
 	
-	 @Override
+	@Override
     public String toString() {
         return "Covid{" +
                 "zipCode=" + zipCode +

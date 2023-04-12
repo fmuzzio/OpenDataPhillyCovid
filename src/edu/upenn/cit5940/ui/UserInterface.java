@@ -25,7 +25,7 @@ public class UserInterface {
             System.out.println("Please select an option:");
             System.out.println("1 - List available actions");
             System.out.println("2 - Total population for all ZIP Codes");
-            System.out.println("3 - Total,partial, or full vaccinations per capita");
+            System.out.println("3 - Total partial or full vaccinations per capita");
             System.out.println("4 - Average market value");
             System.out.println("5 - Average total livable area");
             System.out.println("6 - Total market value per capita");
@@ -85,12 +85,22 @@ public class UserInterface {
                 case "5":
                     // Call method for option 5
                     break;
+                    
                 case "6":
                     // Call method for option 6
+                	System.out.print("Enter a 5-digit ZIP Code: ");
+                    String inputZipCode = scanner.nextLine();
+
+                    int totalMarketValuePerCapita = processor.getTotalMarketValuePerCapita(inputZipCode);
+                    System.out.println("BEGIN OUTPUT");
+                    System.out.println("Total Market Value Per Capita: " + totalMarketValuePerCapita);
+                    System.out.println("END OUTPUT");
                     break;
+                    
                 case "7":
                     // Call method for option 7
                     break;
+                    
                 case "0":
                     exit = true;
                     break;
