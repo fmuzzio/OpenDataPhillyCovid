@@ -19,6 +19,8 @@ public class Processor {
     protected PropertyReader propertiesReader;
     protected PopulationReader populationReader;
     protected Logger logger;
+	
+    private GetAverage get_average; //Leo
     
     protected int populationSum = 0;
     
@@ -78,6 +80,17 @@ public class Processor {
 	   }
 
 	    return vaccinationsPerCapita;
+	}
+	
+	
+	//section 3.4/3.5
+	
+	public GetAverage getGetAverage() {
+		return this.get_average;
+	}
+		
+	public void setGetAverage(GetAverage get_average) {
+		this.get_average = get_average;
 	}
 	
 	//section 3.6
