@@ -33,6 +33,9 @@ public class Processor {
 		
     }
 	
+	
+	
+	
 	//section 3.2 
 	public int getTotalZipCodePopulation() {
 		
@@ -79,6 +82,7 @@ public class Processor {
 	
 	//section 3.6
 	public int getTotalMarketValuePerCapita(String zipCode) {
+		
 	    populations = populationReader.readPopulation();
 	    properties = propertiesReader.getAllProperty();
 	    
