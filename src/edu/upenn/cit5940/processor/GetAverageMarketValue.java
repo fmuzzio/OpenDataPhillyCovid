@@ -15,7 +15,7 @@ public class GetAverageMarketValue implements GetAverage{
 		
 		
 		if(zip_code.length() != 5) { 
-			System.out.print("The length of zip_code is invalid");
+			System.out.print("The length of zipcode is invalid");
 			return 0;
 		}
 		
