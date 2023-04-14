@@ -53,34 +53,38 @@ public class Processor {
 	
 	//section 3.3 
 	public HashMap<Integer, Double> getVaccinationsPerCapita(String vaccineType, String date) {
-		
-		populations = populationReader.readPopulation();
-		coviddata = covidDataReader.getCovidData();
-	    
-		HashMap<Integer, Double> vaccinationsPerCapita = new HashMap<>();
+
+	    populations = populationReader.readPopulation();
+	    coviddata = covidDataReader.getCovidData();
+
+	    HashMap<Integer, Double> vaccinationsPerCapita = new HashMap<>();
 
 	    for (Covid covidEntry : coviddata) {
-	    	if (covidEntry.getTimestamp().contains(date)) {
-	        int zipCode = covidEntry.getZipCode();
-	        int population = populations.getOrDefault(zipCode, 0);
-	     
+	        if (covidEntry.getTimestamp().contains(date)) {
+	            int zipCode = covidEntry.getZipCode();
+	            if (populations.containsKey(zipCode)) {
+	                int population = populations.get(zipCode);
 
-	        if (population > 0) {
-	            int vaccinations;
-	            if (vaccineType.equalsIgnoreCase("partial")) {
-	                vaccinations = covidEntry.getPartiallyVaccinated();
-	            } else {
-	                vaccinations = covidEntry.getFullyVaccinated();
+	                if (population > 0) {
+	                    int vaccinations;
+	                    if (vaccineType.equalsIgnoreCase("partial")) {
+	                        vaccinations = covidEntry.getPartiallyVaccinated();
+	                    } else {
+	                        vaccinations = covidEntry.getFullyVaccinated();
+	                    }
+
+	                    if (vaccinations > 0) {
+	                        double perCapita = (double) vaccinations / population;
+	                        vaccinationsPerCapita.put(zipCode, perCapita);
+	                    }
+	                }
 	            }
-
-	            double perCapita = (double) vaccinations / population;
-	            vaccinationsPerCapita.put(zipCode, perCapita);
 	        }
-	     }
-	   }
+	    }
 
 	    return vaccinationsPerCapita;
 	}
+
 	
 	
 	//section 3.4/3.5
