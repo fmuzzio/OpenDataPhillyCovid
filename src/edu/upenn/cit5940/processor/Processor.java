@@ -1,5 +1,6 @@
 package edu.upenn.cit5940.processor;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,8 +20,7 @@ public class Processor {
     protected PropertyReader propertiesReader;
     protected PopulationReader populationReader;
     protected Logger logger;
-	
-    private GetAverage get_average; //Leo
+
     
     protected int populationSum = 0;
     
@@ -35,6 +35,8 @@ public class Processor {
 		
     }
 	
+	
+	//section 3.1
 	
 	
 	
@@ -84,18 +86,94 @@ public class Processor {
 
 	    return vaccinationsPerCapita;
 	}
-
 	
-	
-	//section 3.4/3.5
-	
-	public GetAverage getGetAverage() {
-		return this.get_average;
-	}
+	//3.4
+	public int getAverage(String zip_code) {
 		
-	public void setGetAverage(GetAverage get_average) {
-		this.get_average = get_average;
+		properties = propertiesReader.getAllProperty();
+		
+		List<Property> zipData = new ArrayList<Property>();
+		double total_market_value = 0;
+		
+		
+		if(zip_code.length() != 5) { 
+			System.out.print("The length of zipcode is invalid");
+			return 0;
+		}
+		
+		try {
+			Integer.parseInt(zip_code);
+			
+		}catch (Exception e) {
+			System.out.print("invalid zip code");
+			return 0;
+		}
+		
+		
+		for (Property property: properties) {
+			if(property.getZipCode().equals(zip_code)) {
+				zipData.add(property);
+			}
+		} 
+				
+		if(zipData.isEmpty()) {return 0;}
+				
+				
+		for(Property zipCode: zipData) {
+			total_market_value = total_market_value + zipCode.getMarketValue();
+		}
+				
+		int avg_market_value = (int)(total_market_value / zipData.size());
+				
+		return avg_market_value;
+				
+	}		
+			
+	
+	//section 3.5
+	public int getAverage(String zip_code, List<Property> dataset) {
+		
+		List<Property> zipData = new ArrayList<Property>();
+		double total_livable_area = 0;
+		
+		
+		if(zip_code.length() != 5) { 
+			System.out.print("The length of zipcode is invalid");
+			return 0;
+		}
+		
+		try {
+			Integer.parseInt(zip_code);
+			
+		}catch (Exception e) {
+			System.out.print("invalid zip code");
+			return 0;
+		}
+		
+		
+		for (Property property: dataset) {
+			if(property.getZipCode().equals(zip_code)) {
+				zipData.add(property);
+			}
+		} 
+		
+		if(zipData.isEmpty()) {return 0;}
+		
+		
+		for(Property zipCode: zipData) {
+			total_livable_area = total_livable_area + zipCode.getTotalLivableArea();
+		}
+		
+		int avg_livable_area = (int)(total_livable_area / zipData.size());
+		
+		return avg_livable_area;
+		
 	}
+	
+	
+	//section 3.6
+	
+	
 	
 	//section 3.6
 	public int getTotalMarketValuePerCapita(String zipCode) {

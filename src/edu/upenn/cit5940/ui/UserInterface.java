@@ -79,6 +79,10 @@ public class UserInterface {
                     break;
                 
                 case "4":
+                	System.out.print("Enter a 5-digit ZIP Code: ");
+                    String inputZipCode = scanner.nextLine();
+                	int average = processor.getAverage(inputZipCode);
+                	System.out.println("Average: "+ average);
                     // Call method for option 4
                     break;
                 
@@ -89,9 +93,9 @@ public class UserInterface {
                 case "6":
                     // Call method for option 6
                 	System.out.print("Enter a 5-digit ZIP Code: ");
-                    String inputZipCode = scanner.nextLine();
+                    String inputZipCode2 = scanner.nextLine();
 
-                    int totalMarketValuePerCapita = processor.getTotalMarketValuePerCapita(inputZipCode);
+                    int totalMarketValuePerCapita = processor.getTotalMarketValuePerCapita(inputZipCode2);
                     System.out.println("BEGIN OUTPUT");
                     System.out.println("Total Market Value Per Capita: " + totalMarketValuePerCapita);
                     System.out.println("END OUTPUT");

@@ -15,7 +15,6 @@ import edu.upenn.cit5940.logging.Logger;
 import edu.upenn.cit5940.processor.Processor;
 import edu.upenn.cit5940.ui.UserInterface;
 import edu.upenn.cit5940.util.Covid;
-import edu.upenn.cit5940.util.Population;
 import edu.upenn.cit5940.util.Property;
 
 public class Main {
