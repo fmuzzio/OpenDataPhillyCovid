@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import edu.upenn.cit5940.logging.Logger;
+
 
 public class PopulationReader extends GeneralReader{
 	
@@ -27,6 +29,10 @@ public class PopulationReader extends GeneralReader{
 	
 	// method 2:
 	public HashMap<Integer, Integer> readPopulation() {
+		
+		Logger.getInstance();
+    	Logger.log("Reading in: "+ filename);
+		
 	    HashMap<Integer, Integer> populations = new HashMap<>();
 	    String line = "";
 	    

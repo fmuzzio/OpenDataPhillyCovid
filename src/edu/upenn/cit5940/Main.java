@@ -51,6 +51,9 @@ public class Main {
 	   
 	    // Create logger and log program start
 	    Logger logger = new Logger(logFilename);
+	    
+	    Logger.initialize(logFilename);
+
 	    //Logger logger = Logger.getInstance(logFilename);
 	    
 	    

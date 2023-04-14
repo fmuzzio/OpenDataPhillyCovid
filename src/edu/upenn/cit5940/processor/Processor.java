@@ -42,6 +42,7 @@ public class Processor {
 	//section 3.1
 	
 	public List<Integer> getAvailableActions() {
+
 	    List<Integer> availableActions = new ArrayList<>();
 	    availableActions.add(0); // Exit
 	    availableActions.add(1); // Display available actions
@@ -76,7 +77,10 @@ public class Processor {
 	//section 3.2 
 	public int getTotalZipCodePopulation() {
 		
+		
 		 populations = populationReader.readPopulation();
+		 
+		 //Logger.log();
 		
 		for (Map.Entry<Integer,Integer> entry : populations.entrySet()) {
 	        Integer value = entry.getValue();

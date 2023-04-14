@@ -8,10 +8,12 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import edu.upenn.cit5940.logging.Logger;
 import edu.upenn.cit5940.util.Covid;
 
 public class CsvCovidDataReader extends GeneralReader implements CovidDataReader   {
 	
+	protected Logger logger;
 	private String fileName;
 	private boolean isValid = false;
 
@@ -30,6 +32,11 @@ public class CsvCovidDataReader extends GeneralReader implements CovidDataReader
     
     @Override
     public List<Covid> getCovidData() {
+    	
+    	Logger.getInstance();
+    	
+    	Logger.log("Reading in: "+ fileName);
+    	
     	List<Covid> covidData = new ArrayList<>();
     	//reg expression for checking "YYYY-MM-DD hh:mm:ss"  format
     	Pattern timestampPattern = Pattern.compile("^\\d{1,2}/\\d{1,2}/\\d{4} \\d{2}:\\d{2}$");

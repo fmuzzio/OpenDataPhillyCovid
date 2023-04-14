@@ -7,28 +7,44 @@ import java.io.Writer;
 
 public class Logger {
 
-	public static Logger instance;
+	protected static Logger instance;
 	protected String logFileName;
-	protected Writer logFileWriter;
+	protected static Writer logFileWriter;
+	private static String initialLogFileName;
 
     public Logger(String logFilename) {
     	this.logFileName = logFilename;
     }
+    
+    public void setInitialLogFileName(String logFilename) {
+        initialLogFileName = logFilename;
+    }
 
-    public static  Logger getInstance() {
+
+    public synchronized static Logger getInstance() {
         if (instance == null) {
-            //instance = new Logger(this.logFilename);
+            throw new IllegalStateException("Logger is not initialized. Call initialize(logFilename) before calling getInstance().");
         }
         return instance;
     }
 
-    public void log(String message) {
+    public static void initialize(String logFilename) {
+        if (instance == null) {
+            instance = new Logger(logFilename);
+        } else {
+            instance.setInitialLogFileName(logFilename);
+        }
+    }
+
+
+    public synchronized static void log(String message) {
         String timestamp = String.valueOf(System.currentTimeMillis());
         String logMessage = timestamp + " " + message + "\n";
         try {
-            if (logFileName != null) {
+            if (instance.logFileName != null) { // Change this line
                 if (logFileWriter == null) {
-                    logFileWriter = new FileWriter(logFileName, true);
+                    //setting true so that data can be appended to existing logfile 
+                    logFileWriter = new FileWriter(instance.logFileName, true);
                 }
                 logFileWriter.write(logMessage);
                 logFileWriter.flush();
@@ -40,7 +56,8 @@ public class Logger {
         }
     }
 
-    public  void setOutput(String fileName) {
+
+    public synchronized void setOutput(String fileName) {
         if (fileName == null) {
             logFileName = null;
             if (logFileWriter != null) {

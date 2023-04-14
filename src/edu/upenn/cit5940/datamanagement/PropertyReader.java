@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import edu.upenn.cit5940.logging.Logger;
 import edu.upenn.cit5940.util.Covid;
 import edu.upenn.cit5940.util.Property;
 
@@ -32,6 +33,10 @@ public class PropertyReader extends GeneralReader {
 	
 	
 	public List<Property> getAllProperties(){
+		
+		Logger.getInstance();
+    	Logger.log("Reading in: "+ filename);
+		
 		List<Property> properties =  new ArrayList<Property>();
 		
 

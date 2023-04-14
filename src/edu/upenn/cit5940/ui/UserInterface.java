@@ -36,7 +36,7 @@ public class UserInterface {
         Scanner scanner = new Scanner(System.in);
         boolean exit = false;
         
-        logger.getInstance();
+        Logger.getInstance();
         
         while (!exit) {
             System.out.println("Please select an option:");

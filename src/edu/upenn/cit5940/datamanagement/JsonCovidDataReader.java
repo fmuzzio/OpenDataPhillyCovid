@@ -35,6 +35,11 @@ public class JsonCovidDataReader extends GeneralReader implements CovidDataReade
 
     @Override
     public List<Covid> getCovidData() {
+    	
+    	Logger.getInstance();
+    	
+    	Logger.log("Reading in: "+ fileName);
+    	
         List<Covid> covidData = new ArrayList<>();
         JSONParser parser = new JSONParser();
 
