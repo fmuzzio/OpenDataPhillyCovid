@@ -7,15 +7,55 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import edu.upenn.cit5940.util.Covid;
 import edu.upenn.cit5940.util.Property;
 
-public class PropertyReader {
+public class PropertyReader extends GeneralReader {
 
 	private String filename;
 
-	public PropertyReader(String name) {
-		this.filename = name;
+	public PropertyReader(String filename) {
+		this.filename = filename;
 	}
+	
+	
+	public List<Property> getAllProperties(){
+		List<Property> properties =  new ArrayList<Property>();
+		
+
+		try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+            String line;
+            
+            // Skip header line
+            br.readLine();
+
+            while ((line = br.readLine()) != null) {
+           
+            	
+                String[] values = line.split(",");
+                double marketValue = parseDoubleOrDefault(values[35], 0);
+                double totalLivableArea = parseDoubleOrDefault(values[65], 0);
+                int zipCode = parseIntOrDefault(values[73], 0);
+                String zipCodeStr = String.format("%05d", zipCode);
+                
+                if (zipCodeStr.length() == 5) {
+                	
+                	
+                	properties.add(new Property(zipCodeStr, marketValue, totalLivableArea));
+                }
+            }
+        } catch (IOException e) {
+        	//logger.log("Exception occurred while reading JSON data: " + e.getMessage());
+            e.printStackTrace();
+        }
+		
+		return properties;
+	}
+	
+	
 		
 	public List<Property> getAllProperty(){
 		

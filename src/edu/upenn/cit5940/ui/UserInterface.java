@@ -1,6 +1,7 @@
 package edu.upenn.cit5940.ui;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -78,6 +79,7 @@ public class UserInterface {
                     System.out.println("END OUTPUT");
                     break;
                 
+                    
                 case "4":
                 	System.out.print("Enter a 5-digit ZIP Code: ");
                     String inputZipCode = scanner.nextLine();
@@ -86,9 +88,11 @@ public class UserInterface {
                     // Call method for option 4
                     break;
                 
+                    
                 case "5":
                     // Call method for option 5
                     break;
+                    
                     
                 case "6":
                     // Call method for option 6
@@ -101,13 +105,36 @@ public class UserInterface {
                     System.out.println("END OUTPUT");
                     break;
                     
+                    
                 case "7":
                     // Call method for option 7
+                    System.out.print("Enter a 5-digit ZIP Code: ");
+                    String inputZipCode3 = scanner.nextLine();
+
+                    Map<Integer, List<Double>> retrievedValues = processor.getMostCovidCasesPerCapita(inputZipCode3);
+                    List<Double> values = retrievedValues.get(Integer.parseInt(inputZipCode3));
+
+                    if (values != null && values.size() == 2) {
+                        double retrievedCovidCasesPerCapita = values.get(0);
+                        double retrievedTotalLivableArea = values.get(1);
+
+                        System.out.println("BEGIN OUTPUT");
+                        System.out.println("The Zip Code With The Most Covid Cases Per Capita and Its Total Livable Area Is As Follows: ");
+                        System.out.println("Zip code: " + inputZipCode3);
+                        System.out.println("Total livable area: " + retrievedTotalLivableArea);
+                        System.out.println("Covid cases per capita: " + retrievedCovidCasesPerCapita);
+                        System.out.println("END OUTPUT");
+                    } else {
+                        System.out.println("No data found for the given ZIP Code.");
+                    }
                     break;
+
+                    
                     
                 case "0":
                     exit = true;
                     break;
+                
                 default:
                     System.out.println("Invalid option. Please try again.");
                     break;

@@ -169,11 +169,7 @@ public class Processor {
 		return avg_livable_area;
 		
 	}
-	
-	
-	//section 3.6
-	
-	
+		
 	
 	//section 3.6
 	public int getTotalMarketValuePerCapita(String zipCode) {
@@ -211,6 +207,46 @@ public class Processor {
 	        return (int) (totalMarketValue / population);
 	    }
 	}
+	
+	//section 3.7: method will produce zip code with most positive covid cases per capita based on total_livable_area for on all timestamps: 
+	// we need to use the three datasets 
+	
+	public Map<Integer, List<Double>> getMostCovidCasesPerCapita(String zipCode) {
+	    coviddata = covidDataReader.getCovidData();
+	    populations = populationReader.readPopulation();
+	    properties = propertiesReader.getAllProperties();
+
+	    Map<Integer, List<Double>> data = new HashMap<>();
+
+	    int population = populations.getOrDefault(Integer.parseInt(zipCode), 0);
+	    double totalLivableArea = 0.0;
+	    int totalCovidCases = 0;
+
+	    if (population > 0) {
+	        for (Property property : properties) {
+	            if (property.getZipCode().contains(zipCode)) {
+	                totalLivableArea += property.getTotalLivableArea();
+	            }
+	        }
+
+	        for (Covid covidEntry : coviddata) {
+	            if (covidEntry.getZipCode() == Integer.parseInt(zipCode)) {
+	                totalCovidCases += covidEntry.getPositiveTests();
+	            }
+	        }
+
+	        double covidCasesPerCapita = (double) totalCovidCases / population;
+	        List<Double> values = new ArrayList<>();
+	        values.add(covidCasesPerCapita);
+	        values.add(totalLivableArea);
+
+	        data.put(Integer.parseInt(zipCode), values);
+	    }
+
+	    return data;
+	}
+
+
 
 
 	

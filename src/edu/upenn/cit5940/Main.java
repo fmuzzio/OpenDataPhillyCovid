@@ -43,11 +43,14 @@ public class Main {
 	    //create property reader object
 	    PropertyReader propReader = new PropertyReader(propertiesFilename);
 	    
+	    
 	    //testing to see if property objects were created properly
-	    List<Property> properties = propReader.getAllProperty();
-	    for(Property property:properties) {
-	    	 System.out.println(property);
-	    }
+	    //<Property> properties = propReader.getAllProperties();
+	    //for(Property property:properties) {
+	    //	System.out.println(property);
+	    	
+	    //}
+	    
 	    
 	    //create population reader object
 	    PopulationReader popReader = new PopulationReader(populationFilename);
