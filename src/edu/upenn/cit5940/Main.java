@@ -51,10 +51,12 @@ public class Main {
 	   
 	    // Create logger and log program start
 	    Logger logger = new Logger(logFilename);
-	    
 	    Logger.initialize(logFilename);
+	    
+	    String argsString = String.join(" ", args);
+	    Logger.log("Command line arguments: " + argsString);
 
-	    //Logger logger = Logger.getInstance(logFilename);
+	    
 	    
 	    
 	   

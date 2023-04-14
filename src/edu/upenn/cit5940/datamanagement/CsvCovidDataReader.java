@@ -34,7 +34,6 @@ public class CsvCovidDataReader extends GeneralReader implements CovidDataReader
     public List<Covid> getCovidData() {
     	
     	Logger.getInstance();
-    	
     	Logger.log("Reading in: "+ fileName);
     	
     	List<Covid> covidData = new ArrayList<>();

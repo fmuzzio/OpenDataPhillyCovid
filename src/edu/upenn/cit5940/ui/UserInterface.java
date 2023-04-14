@@ -53,6 +53,8 @@ public class UserInterface {
             
             String userInput = scanner.nextLine();
             
+            Logger.log("User chose option: "+ userInput);
+            
             switch (userInput) {
             	
             
@@ -82,6 +84,8 @@ public class UserInterface {
                     while (!vaccineType.equalsIgnoreCase("partial") && !vaccineType.equalsIgnoreCase("full")) {
                         System.out.print("Type \"partial\" or \"full\": ");
                         vaccineType = scanner.nextLine();
+                        Logger.log("Vaccine Type Chosen: "+ vaccineType);
+                        
                         if (!vaccineType.equalsIgnoreCase("partial") && !vaccineType.equalsIgnoreCase("full")) {
                             System.out.println("Invalid input. Please enter \"partial\" or \"full\".");
                         }
@@ -92,6 +96,8 @@ public class UserInterface {
                     while (!date.matches(datePattern)) {
                         System.out.print("Type a date in the format YYYY-MM-DD: ");
                         date = scanner.nextLine();
+                        Logger.log("Date Selected: "+ date);
+                        
                         if (!date.matches(datePattern)) {
                             System.out.println("Invalid input. Please enter a date in the format YYYY-MM-DD.");
                         }
@@ -111,6 +117,8 @@ public class UserInterface {
                 	displayZipCodes();
                 	System.out.print("\nFrom the Choices Above, Enter a 5-digit ZIP Code: ");
                     String inputZipCode = scanner.nextLine();
+                    Logger.log("Zip Code Selected: "+ inputZipCode);
+                    
                 	int average = processor.getAverageMarketValue(inputZipCode);
                 	System.out.println("\nBEGIN OUTPUT");
                 	System.out.println("Average Market Value For Given Zip Code: "+ average);
@@ -130,6 +138,8 @@ public class UserInterface {
                 	displayZipCodes();
                 	System.out.print("\nFrom the Choices Above, Enter a 5-digit ZIP Code: ");
                     String inputZipCode2 = scanner.nextLine();
+                    
+                    Logger.log("Zip Code Selected: "+ inputZipCode2);
 
                     int totalMarketValuePerCapita = processor.getTotalMarketValuePerCapita(inputZipCode2);
                     System.out.println("\nBEGIN OUTPUT");
@@ -144,6 +154,8 @@ public class UserInterface {
                 	displayZipCodes();
                 	System.out.print("\nFrom the Choices Above, Enter a 5-digit ZIP Code: ");
                     String inputZipCode3 = scanner.nextLine();
+                    
+                    Logger.log("Zip Code Selected: "+ inputZipCode3);
 
                     Map<Integer, List<Double>> retrievedValues = processor.getMostCovidCasesPerCapita(inputZipCode3);
                     List<Double> values = retrievedValues.get(Integer.parseInt(inputZipCode3));
@@ -167,11 +179,13 @@ public class UserInterface {
                     
                 case "0":
                 	System.out.println("Goodbye!");
+                	Logger.log("Exiting Program..");
                     exit = true;
                     break;
                 
                 default:
                     System.out.println("\nInvalid option. Please try again.\n");
+                    Logger.log("\nInvalid option. Please try again.\n");
                     break;
             }
         }

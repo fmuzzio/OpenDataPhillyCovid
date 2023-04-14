@@ -16,7 +16,7 @@ public class Logger {
     	this.logFileName = logFilename;
     }
     
-    public void setInitialLogFileName(String logFilename) {
+    public static void setInitialLogFileName(String logFilename) {
         initialLogFileName = logFilename;
     }
 
@@ -32,7 +32,7 @@ public class Logger {
         if (instance == null) {
             instance = new Logger(logFilename);
         } else {
-            instance.setInitialLogFileName(logFilename);
+            Logger.setInitialLogFileName(logFilename);
         }
     }
 
@@ -41,7 +41,7 @@ public class Logger {
         String timestamp = String.valueOf(System.currentTimeMillis());
         String logMessage = timestamp + " " + message + "\n";
         try {
-            if (instance.logFileName != null) { // Change this line
+            if (instance.logFileName != null) { 
                 if (logFileWriter == null) {
                     //setting true so that data can be appended to existing logfile 
                     logFileWriter = new FileWriter(instance.logFileName, true);
