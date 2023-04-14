@@ -36,9 +36,17 @@ public class UserInterface {
             String userInput = scanner.nextLine();
             
             switch (userInput) {
+            	
             
                 case "1":
                     // Call method for option 1
+                	System.out.println("BEGIN OUTPUT");
+                	List<Integer> actions = processor.getAvailableActions();
+                	
+                	for(Integer action: actions) {
+                		System.out.println(action);
+                	}
+                	System.out.println("END OUTPUT\n");
                     break;
                 
                 case "2":
@@ -83,8 +91,10 @@ public class UserInterface {
                 case "4":
                 	System.out.print("Enter a 5-digit ZIP Code: ");
                     String inputZipCode = scanner.nextLine();
-                	int average = processor.getAverage(inputZipCode);
-                	System.out.println("Average: "+ average);
+                	int average = processor.getAverageMarketValue(inputZipCode);
+                	System.out.println("BEGIN OUTPUT");
+                	System.out.println("Average Market Value For Given Zip Code: "+ average);
+                	System.out.println("END OUTPUT");
                     // Call method for option 4
                     break;
                 

@@ -9,8 +9,18 @@ import java.util.List;
 
 public class PopulationReader extends GeneralReader{
 	
+	private boolean isValid = false;
+	
 	public PopulationReader(String name) {
 		this.filename = name;
+		this.isValid = checkFileValidity();
+	}
+	
+	public boolean checkFileValidity() {
+		if(this.filename.endsWith("csv")) {
+		isValid = true;
+		}
+		return isValid;
 	}
 	
 	

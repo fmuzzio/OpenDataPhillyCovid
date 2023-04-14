@@ -16,9 +16,18 @@ import edu.upenn.cit5940.util.Property;
 public class PropertyReader extends GeneralReader {
 
 	private String filename;
+	 private boolean isValid = false;
 
 	public PropertyReader(String filename) {
 		this.filename = filename;
+		this.isValid = checkFileValidity();
+	}
+	
+	public boolean checkFileValidity() {
+		if(this.filename.endsWith("csv")) {
+		isValid = true;
+		}
+		return isValid;
 	}
 	
 	

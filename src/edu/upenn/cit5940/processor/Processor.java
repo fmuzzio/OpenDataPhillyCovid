@@ -38,6 +38,36 @@ public class Processor {
 	
 	//section 3.1
 	
+	public List<Integer> getAvailableActions() {
+	    List<Integer> availableActions = new ArrayList<>();
+	    availableActions.add(0); // Exit
+	    availableActions.add(1); // Display available actions
+
+	    if (covidDataReader.checkFileValidity() && populationReader.checkFileValidity()) {
+	        availableActions.add(2);
+	        availableActions.add(3);
+	        
+	    }
+	    
+	    if (propertiesReader.checkFileValidity() && populationReader.checkFileValidity()) {
+	        availableActions.add(4);
+	        availableActions.add(6);
+	        
+	    }
+	    
+	    if (propertiesReader.checkFileValidity()) {
+	        availableActions.add(5);
+	       
+	    }
+	  
+	    if (covidDataReader.checkFileValidity() && populationReader.checkFileValidity() && propertiesReader.checkFileValidity()) {
+	        availableActions.add(7);
+	       
+	    }
+
+	    return availableActions;
+	}
+	
 	
 	
 	//section 3.2 
@@ -88,46 +118,41 @@ public class Processor {
 	}
 	
 	//3.4
-	public int getAverage(String zip_code) {
+	public int getAverageMarketValue(String zip_code) {
+	    properties = propertiesReader.getAllProperties();
+	    
+	    List<Property> zipData = new ArrayList<Property>();
+	    double total_market_value = 0;
+	    
+	    if(zip_code.length() != 5) { 
+	        System.out.print("The length of zipcode is invalid");
+	        return 0;
+	    }
+	    
+	    try {
+	        Integer.parseInt(zip_code);
+	    } catch (Exception e) {
+	        System.out.print("invalid zip code");
+	        return 0;
+	    }
+	    
+	    for (Property property: properties) {
+	        if(property.getZipCode().equals(zip_code)) {
+	            zipData.add(property);
+	        }
+	    }
+	    
+	    if(zipData.isEmpty()) {return 0;}
+	    
+	    for(Property zipCode: zipData) {
+	        total_market_value = total_market_value + zipCode.getMarketValue();
+	    }
+	    
+	    int avg_market_value = (int)(total_market_value / zipData.size());
+	    
+	    return avg_market_value;
+	}
 		
-		properties = propertiesReader.getAllProperty();
-		
-		List<Property> zipData = new ArrayList<Property>();
-		double total_market_value = 0;
-		
-		
-		if(zip_code.length() != 5) { 
-			System.out.print("The length of zipcode is invalid");
-			return 0;
-		}
-		
-		try {
-			Integer.parseInt(zip_code);
-			
-		}catch (Exception e) {
-			System.out.print("invalid zip code");
-			return 0;
-		}
-		
-		
-		for (Property property: properties) {
-			if(property.getZipCode().equals(zip_code)) {
-				zipData.add(property);
-			}
-		} 
-				
-		if(zipData.isEmpty()) {return 0;}
-				
-				
-		for(Property zipCode: zipData) {
-			total_market_value = total_market_value + zipCode.getMarketValue();
-		}
-				
-		int avg_market_value = (int)(total_market_value / zipData.size());
-				
-		return avg_market_value;
-				
-	}		
 			
 	
 	//section 3.5
@@ -181,6 +206,11 @@ public class Processor {
 	    double totalMarketValue = 0;
 	    int intZipCode;
 	    
+	    if(zipCode.length() != 5) { 
+			System.out.print("The length of zipcode is invalid");
+			return 0;
+		}
+	    
 	    try {
 	    	
 	        intZipCode = Integer.parseInt(zipCode);
@@ -208,7 +238,7 @@ public class Processor {
 	    }
 	}
 	
-	//section 3.7: method will produce zip code with most positive covid cases per capita based on total_livable_area for on all timestamps: 
+	//section 3.7: method will produce total number of reported positive covid cases per capita and total_livable_area based on inputted zip code for on all timestamps: 
 	// we need to use the three datasets 
 	
 	public Map<Integer, List<Double>> getMostCovidCasesPerCapita(String zipCode) {
@@ -221,6 +251,11 @@ public class Processor {
 	    int population = populations.getOrDefault(Integer.parseInt(zipCode), 0);
 	    double totalLivableArea = 0.0;
 	    int totalCovidCases = 0;
+	    
+	    if(zipCode.length() != 5) { 
+			System.out.print("The length of zipcode is invalid");
+			return new HashMap<>();
+		}
 
 	    if (population > 0) {
 	        for (Property property : properties) {

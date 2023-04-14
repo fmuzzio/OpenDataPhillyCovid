@@ -13,10 +13,20 @@ import edu.upenn.cit5940.util.Covid;
 public class CsvCovidDataReader extends GeneralReader implements CovidDataReader   {
 	
 	private String fileName;
+	private boolean isValid = false;
 
     public CsvCovidDataReader(String fileName) {
         this.fileName = fileName;
-    }
+        this.isValid = checkFileValidity();
+	}
+	
+    @Override
+	public boolean checkFileValidity() {
+		if(this.fileName.endsWith("csv")) {
+		isValid = true;
+		}
+		return isValid;
+	}
     
     @Override
     public List<Covid> getCovidData() {

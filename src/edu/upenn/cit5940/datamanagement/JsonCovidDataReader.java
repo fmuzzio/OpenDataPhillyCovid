@@ -14,14 +14,24 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class JsonCovidDataReader extends GeneralReader implements CovidDataReader {
+	
     private String fileName;
-    
+    private boolean isValid = false;
     
   
 
     public JsonCovidDataReader(String fileName) {
         this.fileName = fileName;
+        this.isValid = checkFileValidity();
     }
+	
+    @Override
+    public boolean checkFileValidity() {
+		if(this.fileName.endsWith("json")) {
+		isValid = true;
+		}
+		return isValid;
+	}
 
     @Override
     public List<Covid> getCovidData() {

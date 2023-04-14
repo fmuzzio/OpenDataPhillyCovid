@@ -9,5 +9,7 @@ public interface CovidDataReader {
 	
 	 List<Covid> getCovidData();
 	 
+	 public boolean checkFileValidity();
+	 
 
 }

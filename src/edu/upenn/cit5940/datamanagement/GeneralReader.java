@@ -5,6 +5,7 @@ public abstract class GeneralReader {
 	
 	protected String filename;
 	
+	
 	public int parseIntOrDefault(String value, int defaultValue) {
         try {
             return Integer.parseInt(value);
@@ -20,6 +21,7 @@ public abstract class GeneralReader {
 	        return defaultValue;
 	    }
 	}
+
 	
 
 }
