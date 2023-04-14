@@ -48,7 +48,8 @@ public class UserInterface {
             System.out.println("6 - Total market value per capita");
             System.out.println("7 - Custom operation");
             System.out.println("0 - Exit");
-            System.out.print("Please Enter A Menu Option: ");
+            System.out.flush();
+            System.out.print("> ");
             
             
             String userInput = scanner.nextLine();
@@ -82,7 +83,9 @@ public class UserInterface {
                 	
                     String vaccineType = "";
                     while (!vaccineType.equalsIgnoreCase("partial") && !vaccineType.equalsIgnoreCase("full")) {
-                        System.out.print("Type \"partial\" or \"full\": ");
+                        System.out.println("Type \"partial\" or \"full\" ");
+                        System.out.flush();
+                        System.out.print("> ");
                         vaccineType = scanner.nextLine();
                         Logger.log("Vaccine Type Chosen: "+ vaccineType);
                         
@@ -94,7 +97,9 @@ public class UserInterface {
                     String datePattern = "\\d{4}-\\d{2}-\\d{2}";
                     String date = "";
                     while (!date.matches(datePattern)) {
-                        System.out.print("Type a date in the format YYYY-MM-DD: ");
+                        System.out.println("Type a date in the format YYYY-MM-DD");
+                        System.out.flush();
+                        System.out.print("> ");
                         date = scanner.nextLine();
                         Logger.log("Date Selected: "+ date);
                         
@@ -115,7 +120,9 @@ public class UserInterface {
                 case "4":
                 	
                 	displayZipCodes();
-                	System.out.print("\nFrom the Choices Above, Enter a 5-digit ZIP Code: ");
+                	System.out.println("\nFrom the Choices Above, Enter a 5-digit ZIP Code");
+                	System.out.flush();
+                    System.out.print("> ");
                     String inputZipCode = scanner.nextLine();
                     Logger.log("Zip Code Selected: "+ inputZipCode);
                     
@@ -136,7 +143,9 @@ public class UserInterface {
                     // Call method for option 6
                 	
                 	displayZipCodes();
-                	System.out.print("\nFrom the Choices Above, Enter a 5-digit ZIP Code: ");
+                	System.out.println("\nFrom the Choices Above, Enter a 5-digit ZIP Code ");
+                	System.out.flush();
+                    System.out.print("> ");
                     String inputZipCode2 = scanner.nextLine();
                     
                     Logger.log("Zip Code Selected: "+ inputZipCode2);
@@ -152,7 +161,9 @@ public class UserInterface {
                     // Call method for option 7
                 	
                 	displayZipCodes();
-                	System.out.print("\nFrom the Choices Above, Enter a 5-digit ZIP Code: ");
+                	System.out.println("\nFrom the Choices Above, Enter a 5-digit ZIP Code ");
+                	System.out.flush();
+                    System.out.print("> ");
                     String inputZipCode3 = scanner.nextLine();
                     
                     Logger.log("Zip Code Selected: "+ inputZipCode3);
