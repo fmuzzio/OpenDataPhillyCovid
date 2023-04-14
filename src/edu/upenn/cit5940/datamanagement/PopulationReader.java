@@ -5,16 +5,20 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import edu.upenn.cit5940.logging.Logger;
+import edu.upenn.cit5940.util.Property;
 
 
 public class PopulationReader extends GeneralReader{
 	
 	private boolean isValid = false;
 	
-	public PopulationReader(String name) {
-		this.filename = name;
+	private Map<String, HashMap<Integer, Integer>> results = new HashMap<>();
+	
+	public PopulationReader(String filename) {
+		this.filename = filename;
 		this.isValid = checkFileValidity();
 	}
 	
@@ -25,17 +29,25 @@ public class PopulationReader extends GeneralReader{
 		return isValid;
 	}
 	
-	
-	
-	// method 2:
+	//implementing Memoization
 	public HashMap<Integer, Integer> readPopulation() {
-		
-		Logger.getInstance();
-    	Logger.log("Reading in: "+ filename);
-		
+	    // Check if the result is already in the cache
+	    if (results.containsKey(filename)) {
+	        return results.get(filename);
+	    }
+
+	    // If not, read population from the file
+	    HashMap<Integer, Integer> populations = readPopulationFromFile();
+
+	    // Store the population in the cache and return them
+	    results.put(filename, populations);
+	    return populations;
+	}
+
+	private HashMap<Integer, Integer> readPopulationFromFile() {
 	    HashMap<Integer, Integer> populations = new HashMap<>();
 	    String line = "";
-	    
+
 	    try {
 	        BufferedReader br = new BufferedReader(new FileReader(filename));
 	        int i = 0;
@@ -57,7 +69,7 @@ public class PopulationReader extends GeneralReader{
 	    catch(Exception e) {
 	        throw new IllegalStateException(e);
 	    }
-	    
+
 	    return populations;
 	}
 
