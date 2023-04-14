@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 import edu.upenn.cit5940.logging.Logger;
 import edu.upenn.cit5940.processor.Processor;
@@ -18,9 +19,24 @@ public class UserInterface {
         this.logger = logger;
     }
 	
+	public void displayZipCodes() {
+		Set<String> zipCode = processor.getAllUniqueZipCodes();
+    	int columnCounter = 0;
+    	for (String zipcode : zipCode) {
+            System.out.print(zipcode + "\t");
+
+            columnCounter++;
+            if (columnCounter % 5 == 0) {
+                System.out.println();
+            }
+        }
+	}
+	
     public void run() {
         Scanner scanner = new Scanner(System.in);
         boolean exit = false;
+        
+        logger.getInstance();
         
         while (!exit) {
             System.out.println("Please select an option:");
@@ -32,6 +48,8 @@ public class UserInterface {
             System.out.println("6 - Total market value per capita");
             System.out.println("7 - Custom operation");
             System.out.println("0 - Exit");
+            System.out.print("Please Enter A Menu Option: ");
+            
             
             String userInput = scanner.nextLine();
             
@@ -40,7 +58,7 @@ public class UserInterface {
             
                 case "1":
                     // Call method for option 1
-                	System.out.println("BEGIN OUTPUT");
+                	System.out.println("\nBEGIN OUTPUT");
                 	List<Integer> actions = processor.getAvailableActions();
                 	
                 	for(Integer action: actions) {
@@ -52,7 +70,7 @@ public class UserInterface {
                 case "2":
                     // Call method for option 2
                 	int population = processor.getTotalZipCodePopulation();
-                	System.out.println("BEGIN OUTPUT");
+                	System.out.println("\nBEGIN OUTPUT");
                 	System.out.println("The total population for all ZIP Code is: " + population);
                 	System.out.println("END OUTPUT\n");
                     break;
@@ -80,21 +98,23 @@ public class UserInterface {
                     }
 
                     HashMap<Integer, Double> vaccinationsPerCapita = processor.getVaccinationsPerCapita(vaccineType, date);
-                    System.out.println("BEGIN OUTPUT");
+                    System.out.println("\nBEGIN OUTPUT");
                     vaccinationsPerCapita.entrySet().stream()
                             .sorted(Map.Entry.comparingByKey())
                             .forEach(entry -> System.out.printf("%05d %.4f%n", entry.getKey(), entry.getValue()));
-                    System.out.println("END OUTPUT");
+                    System.out.println("END OUTPUT\n");
                     break;
                 
                     
                 case "4":
-                	System.out.print("Enter a 5-digit ZIP Code: ");
+                	
+                	displayZipCodes();
+                	System.out.print("\nFrom the Choices Above, Enter a 5-digit ZIP Code: ");
                     String inputZipCode = scanner.nextLine();
                 	int average = processor.getAverageMarketValue(inputZipCode);
-                	System.out.println("BEGIN OUTPUT");
+                	System.out.println("\nBEGIN OUTPUT");
                 	System.out.println("Average Market Value For Given Zip Code: "+ average);
-                	System.out.println("END OUTPUT");
+                	System.out.println("END OUTPUT\n");
                     // Call method for option 4
                     break;
                 
@@ -106,19 +126,23 @@ public class UserInterface {
                     
                 case "6":
                     // Call method for option 6
-                	System.out.print("Enter a 5-digit ZIP Code: ");
+                	
+                	displayZipCodes();
+                	System.out.print("\nFrom the Choices Above, Enter a 5-digit ZIP Code: ");
                     String inputZipCode2 = scanner.nextLine();
 
                     int totalMarketValuePerCapita = processor.getTotalMarketValuePerCapita(inputZipCode2);
-                    System.out.println("BEGIN OUTPUT");
+                    System.out.println("\nBEGIN OUTPUT");
                     System.out.println("Total Market Value Per Capita: " + totalMarketValuePerCapita);
-                    System.out.println("END OUTPUT");
+                    System.out.println("END OUTPUT\n");
                     break;
                     
                     
                 case "7":
                     // Call method for option 7
-                    System.out.print("Enter a 5-digit ZIP Code: ");
+                	
+                	displayZipCodes();
+                	System.out.print("\nFrom the Choices Above, Enter a 5-digit ZIP Code: ");
                     String inputZipCode3 = scanner.nextLine();
 
                     Map<Integer, List<Double>> retrievedValues = processor.getMostCovidCasesPerCapita(inputZipCode3);
@@ -128,12 +152,12 @@ public class UserInterface {
                         double retrievedCovidCasesPerCapita = values.get(0);
                         double retrievedTotalLivableArea = values.get(1);
 
-                        System.out.println("BEGIN OUTPUT");
+                        System.out.println("\nBEGIN OUTPUT");
                         System.out.println("The Zip Code With The Most Covid Cases Per Capita and Its Total Livable Area Is As Follows: ");
                         System.out.println("Zip code: " + inputZipCode3);
                         System.out.println("Total livable area: " + retrievedTotalLivableArea);
                         System.out.println("Covid cases per capita: " + retrievedCovidCasesPerCapita);
-                        System.out.println("END OUTPUT");
+                        System.out.println("END OUTPUT\n");
                     } else {
                         System.out.println("No data found for the given ZIP Code.");
                     }
@@ -142,16 +166,20 @@ public class UserInterface {
                     
                     
                 case "0":
+                	System.out.println("Goodbye!");
                     exit = true;
                     break;
                 
                 default:
-                    System.out.println("Invalid option. Please try again.");
+                    System.out.println("\nInvalid option. Please try again.\n");
                     break;
             }
         }
         
         scanner.close();
     }
+   
+    
+    
 }
 

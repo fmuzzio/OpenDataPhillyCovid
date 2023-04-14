@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
+import java.util.TreeSet;
 
 import edu.upenn.cit5940.datamanagement.CovidDataReader;
 import edu.upenn.cit5940.datamanagement.PopulationReader;
@@ -29,11 +31,12 @@ public class Processor {
 	protected List<Property> properties;
  	
 	public Processor(CovidDataReader covidreader,PropertyReader propreader,PopulationReader popreader) {
-		covidDataReader = covidreader;
-		propertiesReader = propreader;
-		populationReader = popreader;
+		this.covidDataReader = covidreader;
+		this.propertiesReader = propreader;
+		this.populationReader = popreader;
 		
     }
+	
 	
 	
 	//section 3.1
@@ -279,6 +282,19 @@ public class Processor {
 	    }
 
 	    return data;
+	}
+	
+	//helper method to make user interaction more informative, using Tree set to display all unique zipcodes 
+	public Set<String> getAllUniqueZipCodes() {
+		properties = propertiesReader.getAllProperties();
+		
+	    Set<String> uniqueZipCodes = new TreeSet<>();
+
+	    for (Property property : properties) {
+	        uniqueZipCodes.add(property.getZipCode());
+	    }
+
+	    return uniqueZipCodes;
 	}
 
 

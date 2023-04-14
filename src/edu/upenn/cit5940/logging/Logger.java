@@ -3,20 +3,21 @@ package edu.upenn.cit5940.logging;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.io.Writer;
 
 public class Logger {
 
-    private static Logger instance;
-    private String logFileName;
-    private Writer logFileWriter;
+	public static Logger instance;
+	protected String logFileName;
+	protected Writer logFileWriter;
 
-    public Logger(String logFilename) {}
+    public Logger(String logFilename) {
+    	this.logFileName = logFilename;
+    }
 
-    public static  Logger getInstance(String logFilename) {
+    public static  Logger getInstance() {
         if (instance == null) {
-            instance = new Logger(logFilename);
+            //instance = new Logger(this.logFilename);
         }
         return instance;
     }

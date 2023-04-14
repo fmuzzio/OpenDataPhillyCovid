@@ -1,21 +1,14 @@
 package edu.upenn.cit5940;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import edu.upenn.cit5940.datamanagement.CovidDataReader;
 import edu.upenn.cit5940.datamanagement.CovidReaderFactory;
-import edu.upenn.cit5940.datamanagement.CsvCovidDataReader;
-import edu.upenn.cit5940.datamanagement.JsonCovidDataReader;
 import edu.upenn.cit5940.datamanagement.PopulationReader;
 import edu.upenn.cit5940.datamanagement.PropertyReader;
 import edu.upenn.cit5940.logging.Logger;
 import edu.upenn.cit5940.processor.Processor;
 import edu.upenn.cit5940.ui.UserInterface;
-import edu.upenn.cit5940.util.Covid;
-import edu.upenn.cit5940.util.Property;
+
 
 public class Main {
 
