@@ -142,7 +142,7 @@ public class Processor {
 	        return 0;
 	    }
 	    
-	    for (Property property: properties) {
+	    for (Property property: dataset) {
 	        if(property.getZipCode().equals(zip_code)) {
 	            zipData.add(property);
 	        }
