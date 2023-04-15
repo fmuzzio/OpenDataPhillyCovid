@@ -124,7 +124,7 @@ public class Processor {
 	}
 	
 	//3.4
-	public int getAverageMarketValue(String zip_code) {
+	public int getAverageMarketValue(String zip_code, List<Property> dataset) {
 	    properties = propertiesReader.getAllProperties();
 	    
 	    List<Property> zipData = new ArrayList<Property>();
@@ -162,7 +162,7 @@ public class Processor {
 			
 	
 	//section 3.5
-	public int getAverage(String zip_code, List<Property> dataset) {
+	public int getAverageTotalLivableArea(String zip_code, List<Property> dataset) {
 		
 		List<Property> zipData = new ArrayList<Property>();
 		double total_livable_area = 0;
@@ -200,6 +200,8 @@ public class Processor {
 		return avg_livable_area;
 		
 	}
+	
+	
 		
 	
 	//section 3.6
