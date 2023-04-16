@@ -37,14 +37,6 @@ public class Main {
 	    PropertyReader propReader = new PropertyReader(propertiesFilename);
 	    
 	    
-	    //testing to see if property objects were created properly
-	    //<Property> properties = propReader.getAllProperties();
-	    //for(Property property:properties) {
-	    //	System.out.println(property);
-	    	
-	    //}
-	    
-	    
 	    //create population reader object
 	    PopulationReader popReader = new PopulationReader(populationFilename);
 	     
@@ -57,9 +49,6 @@ public class Main {
 	    Logger.log("Command line arguments: " + argsString);
 
 	    
-	    
-	    
-	   
 	    // Create Processor object and initialize data (going to want to pass in Reader objects)
 	    Processor processor = new Processor(covidReader,propReader,popReader);
 	    

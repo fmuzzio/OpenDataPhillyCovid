@@ -60,7 +60,6 @@ public class UserInterface {
             	
             
                 case "1":
-                    // Call method for option 1
                 	System.out.println("\nBEGIN OUTPUT");
                 	List<Integer> actions = processor.getAvailableActions();
                 	
@@ -71,7 +70,6 @@ public class UserInterface {
                     break;
                 
                 case "2":
-                    // Call method for option 2
                 	int population = processor.getTotalZipCodePopulation();
                 	System.out.println("\nBEGIN OUTPUT");
                 	System.out.println("The total population for all ZIP Code is: " + population);
@@ -79,8 +77,6 @@ public class UserInterface {
                     break;
                 
                 case "3":
-                    // Call method for option 3
-                	
                     String vaccineType = "";
                     while (!vaccineType.equalsIgnoreCase("partial") && !vaccineType.equalsIgnoreCase("full")) {
                         System.out.println("Type \"partial\" or \"full\" ");
@@ -118,7 +114,6 @@ public class UserInterface {
                 
                     
                 case "4":
-                	
                 	displayZipCodes();
                 	System.out.println("\nFrom the Choices Above, Enter a 5-digit ZIP Code");
                 	System.out.flush();
@@ -130,36 +125,25 @@ public class UserInterface {
                 	System.out.println("\nBEGIN OUTPUT");
                 	System.out.println("Average Market Value For Given Zip Code: "+ average);
                 	System.out.println("END OUTPUT\n");
-                    // Call method for option 4
                     break;
                 
                     
                 case "5":
-                    // Call method for option 5
+                	displayZipCodes();
+                	System.out.println("\nFrom the Choices Above, Enter a 5-digit ZIP Code");
+                	System.out.flush();
+                    System.out.print("> ");
+                    String inputZipCode2 = scanner.nextLine();
+                    Logger.log("Zip Code Selected: "+ inputZipCode2);
+                    
+                    int average2 = processor.getAverageTotalLivableArea(inputZipCode2);
+                	System.out.println("\nBEGIN OUTPUT");
+                	System.out.println("Average Total Livable Area For Given Zip Code: "+ average2);
+                	System.out.println("END OUTPUT\n");
                     break;
                     
                     
                 case "6":
-                    // Call method for option 6
-                	
-                	displayZipCodes();
-                	System.out.println("\nFrom the Choices Above, Enter a 5-digit ZIP Code ");
-                	System.out.flush();
-                    System.out.print("> ");
-                    String inputZipCode2 = scanner.nextLine();
-                    
-                    Logger.log("Zip Code Selected: "+ inputZipCode2);
-
-                    int totalMarketValuePerCapita = processor.getTotalMarketValuePerCapita(inputZipCode2);
-                    System.out.println("\nBEGIN OUTPUT");
-                    System.out.println("Total Market Value Per Capita: " + totalMarketValuePerCapita);
-                    System.out.println("END OUTPUT\n");
-                    break;
-                    
-                    
-                case "7":
-                    // Call method for option 7
-                	
                 	displayZipCodes();
                 	System.out.println("\nFrom the Choices Above, Enter a 5-digit ZIP Code ");
                 	System.out.flush();
@@ -168,23 +152,33 @@ public class UserInterface {
                     
                     Logger.log("Zip Code Selected: "+ inputZipCode3);
 
-                    Map<Integer, List<Double>> retrievedValues = processor.getMostCovidCasesPerCapita(inputZipCode3);
-                    List<Double> values = retrievedValues.get(Integer.parseInt(inputZipCode3));
-
-                    if (values != null && values.size() == 2) {
-                        double retrievedCovidCasesPerCapita = values.get(0);
-                        double retrievedTotalLivableArea = values.get(1);
-
-                        System.out.println("\nBEGIN OUTPUT");
-                        System.out.println("The Zip Code With The Most Covid Cases Per Capita and Its Total Livable Area Is As Follows: ");
-                        System.out.println("Zip code: " + inputZipCode3);
-                        System.out.println("Total livable area: " + retrievedTotalLivableArea);
-                        System.out.println("Covid cases per capita: " + retrievedCovidCasesPerCapita);
-                        System.out.println("END OUTPUT\n");
-                    } else {
-                        System.out.println("No data found for the given ZIP Code.");
-                    }
+                    int totalMarketValuePerCapita = processor.getTotalMarketValuePerCapita(inputZipCode3);
+                    System.out.println("\nBEGIN OUTPUT");
+                    System.out.println("Total Market Value Per Capita: " + totalMarketValuePerCapita);
+                    System.out.println("END OUTPUT\n");
                     break;
+                    
+                    
+                case "7":
+                	Map.Entry<Integer, List<Double>> retrievedEntry = processor.getMostCovidCasesPerCapita();
+
+                	if (retrievedEntry != null) {
+                	    int zipCode = retrievedEntry.getKey();
+                	    List<Double> values = retrievedEntry.getValue();
+
+                	    double retrievedCovidCasesPerCapita = values.get(0);
+                	    double retrievedTotalLivableArea = values.get(1);
+
+                	    System.out.println("\nBEGIN OUTPUT");
+                	    System.out.println("The Zip Code With The Most Covid Cases Per Capita and Its Total Livable Area Is As Follows: ");
+                	    System.out.println("Zip code: " + zipCode);
+                	    System.out.println("Total livable area: " + retrievedTotalLivableArea);
+                	    System.out.println("Covid cases per capita: " + retrievedCovidCasesPerCapita);
+                	    System.out.println("END OUTPUT\n");
+                	} else {
+                	    System.out.println("No data found.");
+                	}
+                	break;
 
                     
                     

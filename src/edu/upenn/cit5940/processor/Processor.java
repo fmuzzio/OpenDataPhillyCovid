@@ -1,11 +1,13 @@
 package edu.upenn.cit5940.processor;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import edu.upenn.cit5940.datamanagement.CovidDataReader;
 import edu.upenn.cit5940.datamanagement.PopulationReader;
@@ -123,84 +125,44 @@ public class Processor {
 	    return vaccinationsPerCapita;
 	}
 	
-	//3.4
-	public int getAverageMarketValue(String zip_code) {
+	public int getAverage(String zipCode, AverageStrategy averageStrategy) {
 	    properties = propertiesReader.getAllProperties();
 
-	    List<Property> zipData = new ArrayList<Property>();
-	    double total_market_value = 0;
-	    
-	    if(zip_code.length() != 5) { 
+	    if (zipCode.length() != 5) {
 	        System.out.print("The length of zipcode is invalid");
 	        return 0;
 	    }
-	    
+
 	    try {
-	        Integer.parseInt(zip_code);
+	        Integer.parseInt(zipCode);
 	    } catch (Exception e) {
-	        System.out.print("invalid zip code");
+	        System.out.print("Invalid zip code");
 	        return 0;
 	    }
-	    
-	    for (Property property: properties) {
-	        if(property.getZipCode().equals(zip_code)) {
-	            zipData.add(property);
-	        }
+
+	    List<Property> zipData = properties.stream()
+	            .filter(p -> p.getZipCode().equals(zipCode))
+	            .collect(Collectors.toList());
+
+	    if (zipData.isEmpty()) {
+	        return 0;
 	    }
-	    
-	    if(zipData.isEmpty()) {return 0;}
-	    
-	    for(Property zipCode: zipData) {
-	        total_market_value = total_market_value + zipCode.getMarketValue();
-	    }
-	    
-	    int avg_market_value = (int)(total_market_value / zipData.size());
-	    
-	    return avg_market_value;
+
+	    return (int) averageStrategy.calculateAverage(zipData);
 	}
-		
-			
 	
-	//section 3.5
-	public int getAverageTotalLivableArea(String zip_code) {
-		properties = propertiesReader.getAllProperties();
-		
-		List<Property> zipData = new ArrayList<Property>();
-		double total_livable_area = 0;
-		
-		
-		if(zip_code.length() != 5) { 
-			System.out.print("The length of zipcode is invalid");
-			return 0;
-		}
-		
-		try {
-			Integer.parseInt(zip_code);
-			
-		}catch (Exception e) {
-			System.out.print("invalid zip code");
-			return 0;
-		}
-		
-		
-		for (Property property: properties) {
-			if(property.getZipCode().equals(zip_code)) {
-				zipData.add(property);
-			}
-		} 
-		
-		if(zipData.isEmpty()) {return 0;}
-		
-		
-		for(Property zipCode: zipData) {
-			total_livable_area = total_livable_area + zipCode.getTotalLivableArea();
-		}
-		
-		int avg_livable_area = (int)(total_livable_area / zipData.size());
-		
-		return avg_livable_area;
-		
+	// implementing Strategy Design pattern
+	//section 3.4
+	public int getAverageMarketValue(String zipCode) {
+	    return getAverage(zipCode, new AverageMarketValueStrategy());
 	}
+	
+	// implementing Strategy Design pattern
+	//section 3.5
+	public int getAverageTotalLivableArea(String zipCode) {
+	    return getAverage(zipCode, new AverageTotalLivableAreaStrategy());
+	}
+
 		
 		
 	
@@ -208,7 +170,7 @@ public class Processor {
 	public int getTotalMarketValuePerCapita(String zipCode) {
 		
 	    populations = populationReader.readPopulation();
-	    properties = propertiesReader.getAllProperty();
+	    properties = propertiesReader.getAllProperties();
 	    
 	    int population = 0;
 	    double totalMarketValue = 0;
@@ -246,48 +208,48 @@ public class Processor {
 	    }
 	}
 	
-	//section 3.7: method will produce total number of reported positive covid cases per capita and total_livable_area based on inputted zip code for on all timestamps: 
-	// we need to use the three datasets 
+	//section 3.7: method will produce most reported number of  positive covid cases per capita and total_livable_area based on zip code for on all timestamps: 
 	
-	public Map<Integer, List<Double>> getMostCovidCasesPerCapita(String zipCode) {
+	public Map.Entry<Integer, List<Double>> getMostCovidCasesPerCapita() {
 	    coviddata = covidDataReader.getCovidData();
 	    populations = populationReader.readPopulation();
 	    properties = propertiesReader.getAllProperties();
 
 	    Map<Integer, List<Double>> data = new HashMap<>();
 
-	    int population = populations.getOrDefault(Integer.parseInt(zipCode), 0);
-	    double totalLivableArea = 0.0;
-	    int totalCovidCases = 0;
-	    
-	    if(zipCode.length() != 5) { 
-			System.out.print("The length of zipcode is invalid");
-			return new HashMap<>();
-		}
+	    for (Map.Entry<Integer, Integer> populationEntry : populations.entrySet()) {
+	        int zipCode = populationEntry.getKey();
+	        int population = populationEntry.getValue();
+	        double totalLivableArea = 0.0;
+	        int totalCovidCases = 0;
 
-	    if (population > 0) {
-	        for (Property property : properties) {
-	            if (property.getZipCode().contains(zipCode)) {
-	                totalLivableArea += property.getTotalLivableArea();
+	        if (population > 0) {
+	            for (Property property : properties) {
+	                if (property.getZipCode().equals(String.valueOf(zipCode))) {
+	                    totalLivableArea += property.getTotalLivableArea();
+	                }
 	            }
-	        }
 
-	        for (Covid covidEntry : coviddata) {
-	            if (covidEntry.getZipCode() == Integer.parseInt(zipCode)) {
-	                totalCovidCases += covidEntry.getPositiveTests();
+	            for (Covid covidEntry : coviddata) {
+	                if (covidEntry.getZipCode() == zipCode) {
+	                    totalCovidCases += covidEntry.getPositiveTests();
+	                }
 	            }
+
+	            double covidCasesPerCapita = (double) totalCovidCases / population;
+	            List<Double> values = new ArrayList<>();
+	            values.add(covidCasesPerCapita);
+	            values.add(totalLivableArea);
+
+	            data.put(zipCode, values);
 	        }
-
-	        double covidCasesPerCapita = (double) totalCovidCases / population;
-	        List<Double> values = new ArrayList<>();
-	        values.add(covidCasesPerCapita);
-	        values.add(totalLivableArea);
-
-	        data.put(Integer.parseInt(zipCode), values);
 	    }
 
-	    return data;
+	    return data.entrySet().stream()
+	            .max(Comparator.comparingDouble(entry -> entry.getValue().get(0)))
+	            .orElse(null);
 	}
+
 	
 	//helper method to make user interaction more informative, using Tree set to display all unique zipcodes 
 	public Set<String> getAllUniqueZipCodes() {
