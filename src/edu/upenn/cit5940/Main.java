@@ -1,5 +1,11 @@
+
+
+
 package edu.upenn.cit5940;
 
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import edu.upenn.cit5940.datamanagement.CovidDataReader;
 import edu.upenn.cit5940.datamanagement.CovidReaderFactory;
@@ -16,16 +22,45 @@ public class Main {
 		// TODO Auto-generated method stub
 		// Check if the correct number of runtime arguments were passed
 		
-		if (args.length != 4) {
-	        System.out.println("Error in runtime arguments, set run Configuration arguments in form: <covid_filename> <properties_filename> <population_filename> <log_filename>");
-	        return;
-	    }
-	    
-	     //Initialize filenames
-	    String covidFilename = args[0];
-	    String propertiesFilename = args[1];
-	    String populationFilename = args[2];
-	    String logFilename = args[3];
+		String populationFilename = null;
+        String logFilename = null;
+        String covidFilename = null;
+        String propertiesFilename = null;
+
+        Pattern argumentPattern = Pattern.compile("^--(?<name>.+?)=(?<value>.+)$");
+
+        for (String arg : args) {
+            Matcher matcher = argumentPattern.matcher(arg);
+            if (matcher.matches()) {
+                String name = matcher.group("name");
+                String value = matcher.group("value");
+
+                switch (name) {
+                    case "population":
+                        populationFilename = value;
+                        break;
+                    case "log":
+                        logFilename = value;
+                        break;
+                    case "covid":
+                        covidFilename = value;
+                        break;
+                    case "properties":
+                        propertiesFilename = value;
+                        break;
+                    default:
+                        System.out.println("Unknown argument: " + arg);
+                        break;
+                }
+            } else {
+                System.out.println("Invalid argument format: " + arg);
+            }
+        }
+
+        if (populationFilename == null || logFilename == null || covidFilename == null || propertiesFilename == null) {
+            System.out.println("Error: missing required arguments.");
+            return;
+        }
 	    
 	    
 	    
