@@ -22,7 +22,7 @@ Getting Started
 
   Installation 
   -Clone the repository:
-  git clone https://github.com/yourusername/property-analysis-tool.git
+  git clone https://github.com/fmuzzio/OpenDataPhillyCovid.git
   -Open the project in your favorite Java IDE (e.g., IntelliJ IDEA or Eclipse).
   -Configure the project's run configurations with the following runtime arguments:
        --population=population.csv --log=log.txt --covid=covid_data.json --properties=properties.csv
